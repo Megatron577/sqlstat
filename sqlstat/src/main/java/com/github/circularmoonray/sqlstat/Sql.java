@@ -27,8 +27,8 @@ public class Sql{
 		this.id = id;
 		this.pw = pw;
 
-		String command = "";
 		commands = new HashMap<String, String>();
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (InstantiationException | IllegalAccessException
@@ -37,24 +37,8 @@ public class Sql{
 		}
 
 		//sql鯖への接続とdb作成
-		connect(url, id, pw);
+		connect();
 
-		//dbへの接続。失敗時には作成
-		command = "USE " + db;
-
-		try {
-			stmt.execute(command);
-		} catch (SQLException e) {
-			exc = e.getMessage();
-			createDB(db);
-			connect(url, id, pw);
-			try {
-				stmt.execute(command);
-			} catch (SQLException e1) {
-				// TODO 自動生成された catch ブロック
-				e1.printStackTrace();
-			}
-		}
 	}
 
 	/**
@@ -65,10 +49,15 @@ public class Sql{
 	 * @param pw ユーザーPW
 	 * @return
 	 */
-	private boolean connect(String url, String id, String pw){
+	private boolean connect(){
 		try {
+			if(stmt != null && !stmt.isClosed()){
+				stmt.close();
+				con.close();
+			}
 			con = (Connection) DriverManager.getConnection(url, id, pw);
 			stmt = con.createStatement();
+			stmt.executeQuery("use " + db);
 	    } catch (SQLException e) {
 	    	e.printStackTrace();
 	    	return false;
@@ -142,8 +131,12 @@ public class Sql{
 		//insert into @table(@key..., uuid) values(@s..., '@struuid')
 		// on duplicate key update @key=@s, ...
 		for(Map.Entry<String, String> com : commands.entrySet()){
+
+			//insert into @table(@key...,
 			commandf += com.getKey()   + ",";
+			//uuid) values(@s...,
 			commandm += com.getValue() + ",";
+			//'@struuid') on duplicate key update @key=@s, ...
 			commandr += com.getKey() + "=" + com.getValue() + ",";
 		}
 
@@ -208,6 +201,7 @@ public class Sql{
 	 * コマンド出力関数
 	 * @param command コマンド内容
 	 * @return 成否
+	 * @throws SQLException
 	 */
 	private boolean putCommand(String command){
 		try {
@@ -215,8 +209,10 @@ public class Sql{
 			return true;
 		} catch (SQLException e) {
 			//接続エラーの場合は、再度接続後、コマンド実行
+			java.lang.System.out.println("接続に失敗しました。再接続します。");
 			exc = e.getMessage();
-			connect(url, id, pw);
+			connect();
+			e.printStackTrace();
 			try {
 				stmt.executeUpdate(command);
 				return true;
