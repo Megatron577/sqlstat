@@ -1,0 +1,26 @@
+name: "SqlStat"
+main: com.github.circularmoonray.sqlstat.SqlStat
+version: 0.0.1
+author: moonray
+
+commands:
+  stat:
+      description: This is a demo command.
+      usage: /<command> <start | end | put>
+      permission: sqlstat.stat
+      permission-message: You don't have <permission>
+  sql:
+      description: This is a demo command.
+      usage: /<command> <reload|mine>
+      permission: sqlstat.sql
+      permission-message: You don't have <permission>
+  addperms:
+      description: This is a demo command.
+      usage: /<command> <add | remove>
+      permission: sqlstat.addperms
+      permission-message: You don't have <permission>
+
+permissions:
+  sqlstat.addperms:
+    description: All players can use to this command. add permission "anyname".
+    default: op

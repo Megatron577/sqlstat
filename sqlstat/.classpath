@@ -17,16 +17,12 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Program Files/pleiades-e4.4-ultimate-jre_20150310/pleiades/eclipse/mysql-connector-java-5.1.35/mysql-connector-java-5.1.35/mysql-connector-java-5.1.35-bin.jar"/>
+	<classpathentry kind="lib" path="C:/pleiades/workspace/mysql-connector-java-5.1.35-bin.jar"/>
+	<classpathentry kind="lib" path="C:/pleiades/workspace/spigot-1.10.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
